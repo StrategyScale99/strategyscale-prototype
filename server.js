@@ -581,7 +581,13 @@ app.post("/api/final", async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`StrategyScale prototype running on http://localhost:${PORT}`);
-});
+// Serverless platforms (Vercel) import `app` and manage the listener themselves.
+// Only bind a port for local dev.
+export default app;
+
+if (!process.env.VERCEL) {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`StrategyScale prototype running on http://localhost:${PORT}`);
+  });
+}
