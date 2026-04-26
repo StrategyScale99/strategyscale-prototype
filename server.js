@@ -1,4 +1,6 @@
 import express from "express";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import Anthropic from "@anthropic-ai/sdk";
 import "dotenv/config";
 
@@ -7,8 +9,20 @@ import getThinkingFramePrompt from "./prompts/thinkingFrame.js";
 import getPressureTestPrompt from "./prompts/pressureTest.js";
 import getFinalPrompt from "./prompts/final.js";
 
+// __dirname doesn't exist in ES modules — derive it from import.meta.url.
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 const app = express();
 app.use(express.json({ limit: "1mb" }));
+
+// Explicit handler for / so the index.html path is unambiguous (especially
+// behind Vercel's catch-all routing). Mirrors the no-store cache header
+// applied to the rest of /public/* below.
+app.get("/", (req, res) => {
+  res.setHeader("Cache-Control", "no-store");
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
 // Disable caching during prototype iteration so refactored client code
 // can't be served by a stale browser tab against a refactored server.
 app.use(express.static("public", {
