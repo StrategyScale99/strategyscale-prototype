@@ -560,28 +560,6 @@
         border-bottom: 1px solid var(--border-soft);
       }
 
-      /* Subordinate post-CTA restart link */
-      .start-over-row {
-        margin: 18px 0 0;
-        text-align: left;
-      }
-      .start-over-link {
-        background: transparent;
-        color: var(--muted);
-        border: 0;
-        padding: 4px 0;
-        font-family: ui-sans-serif, system-ui, sans-serif;
-        font-size: 12px;
-        letter-spacing: 0.04em;
-        text-transform: none;
-        font-weight: 400;
-        cursor: pointer;
-        text-decoration: underline;
-        text-underline-offset: 4px;
-        opacity: 0.75;
-      }
-      .start-over-link:hover { color: var(--accent); opacity: 1; }
-
       /* ─── Post-final monetisation CTA ──────────────────────────────────── */
       .cta-block {
         margin: 40px 0 0;
@@ -702,6 +680,109 @@
         margin: 4px 0 18px;
         max-width: 640px;
       }
+
+      /* ─── Continuation modal (post-CTA "where do you want to go next") ── */
+      .modal-backdrop {
+        position: fixed; inset: 0;
+        background: rgba(8, 10, 14, 0.78);
+        backdrop-filter: blur(4px);
+        z-index: 100;
+        display: flex; align-items: center; justify-content: center;
+        padding: 24px;
+      }
+      .modal-card {
+        position: relative;
+        background: var(--panel);
+        border: 1px solid var(--accent);
+        border-radius: 8px;
+        padding: 32px 32px 28px;
+        max-width: 720px; width: 100%;
+        box-shadow: 0 24px 48px rgba(0,0,0,0.55);
+      }
+      .modal-card .modal-close {
+        position: absolute;
+        top: 12px; right: 14px;
+        background: transparent; border: 0;
+        color: var(--muted);
+        font-size: 22px; line-height: 1;
+        padding: 6px 10px; cursor: pointer;
+        font-family: ui-sans-serif, system-ui, sans-serif;
+      }
+      .modal-card .modal-close:hover { color: var(--text); }
+      .modal-card .modal-heading {
+        font-family: ui-serif, Georgia, "Times New Roman", serif;
+        font-size: 22px; line-height: 1.3; font-weight: 500;
+        color: var(--text);
+        margin: 0 0 8px;
+      }
+      .modal-card .modal-subtext {
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 13px; line-height: 1.55;
+        color: var(--muted);
+        margin: 0 0 22px;
+      }
+      .modal-options {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      .modal-option {
+        background: var(--panel-2);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 18px 20px 20px;
+        display: flex; flex-direction: column;
+      }
+      .modal-option:hover { border-color: var(--accent); }
+      .modal-option .opt-title {
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase;
+        color: var(--accent);
+        margin: 0 0 8px;
+      }
+      .modal-option .opt-sub {
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 14px; line-height: 1.5;
+        color: var(--muted);
+        margin: 0 0 16px;
+      }
+      .modal-option button {
+        margin-top: auto;
+        width: 100%;
+      }
+
+      /* ─── Expand-this-decision panel ──────────────────────────────────── */
+      .expand-panel {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-left: 3px solid var(--accent);
+        border-radius: 6px;
+        padding: 22px 24px 24px;
+        margin: 28px 0 0;
+      }
+      .expand-panel .expand-heading {
+        font-family: ui-serif, Georgia, "Times New Roman", serif;
+        font-size: 20px; line-height: 1.3; font-weight: 500;
+        color: var(--text);
+        margin: 0 0 6px;
+      }
+      .expand-panel .expand-sub {
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 13px; color: var(--muted);
+        margin: 0 0 14px;
+      }
+      .expand-panel textarea { min-height: 110px; }
+      .expand-result {
+        margin: 18px 0 0;
+        background: var(--accent-soft);
+        border: 1px dashed var(--accent);
+        border-radius: 6px;
+        padding: 14px 18px;
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 13px; line-height: 1.55;
+        color: var(--text);
+      }
+
       @media (max-width: 720px) {
         .proof-thresholds { grid-template-columns: 1fr; }
         .action-plan { grid-template-columns: 1fr; }
@@ -709,6 +790,8 @@
         .memory-block .memory-row { grid-template-columns: 1fr; gap: 4px; }
         .context-bar { flex-wrap: wrap; }
         .cta-grid { grid-template-columns: 1fr; }
+        .modal-options { grid-template-columns: 1fr; }
+        .modal-card { padding: 28px 22px 22px; }
       }
     </style>
   </head>
@@ -770,6 +853,11 @@
           batches: [],
           finalRec: null,
           savedJourney: null, // not persisted
+          // Post-final continuation flow (not persisted, prototype-only)
+          ctaModalOpen: false,
+          ctaExpandPanelOpen: false,
+          ctaExpansionInput: "",
+          ctaExpansionResult: null,
         };
       }
       let state = freshState();
@@ -777,7 +865,11 @@
       // ─── Persistence ────────────────────────────────────────────────────
       function persist() {
         try {
-          const { savedJourney, loading, loadingMsg, error, ...persistable } = state;
+          const {
+            savedJourney, loading, loadingMsg, error,
+            ctaModalOpen, ctaExpandPanelOpen, ctaExpansionInput, ctaExpansionResult,
+            ...persistable
+          } = state;
           localStorage.setItem(STORAGE_KEY, JSON.stringify(persistable));
         } catch {}
       }
@@ -1016,6 +1108,40 @@
       function restart() {
         clearSaved();
         state = freshState();
+        render();
+      }
+
+      // ─── Post-final continuation flow (prototype, no payment) ───────────
+      function openCtaModal() {
+        state.ctaModalOpen = true;
+        render();
+      }
+      function closeCtaModal() {
+        state.ctaModalOpen = false;
+        render();
+      }
+      function chooseExpandDecision() {
+        state.ctaModalOpen = false;
+        state.ctaExpandPanelOpen = true;
+        render();
+        const ta = document.getElementById("expand-input");
+        if (ta) ta.focus();
+      }
+      function chooseStartNew() {
+        state.ctaModalOpen = false;
+        restart();
+      }
+      function generateExpansion() {
+        const ta = document.getElementById("expand-input");
+        const value = ta ? ta.value.trim() : "";
+        state.ctaExpansionInput = value;
+        if (value) {
+          console.log("[StrategyScale] expansion intent:", value);
+        } else {
+          console.log("[StrategyScale] expansion intent: (empty)");
+        }
+        state.ctaExpansionResult =
+          "Expansion mode is not live yet in this prototype. This click records tester intent to continue working the same decision.";
         render();
       }
 
@@ -1344,9 +1470,51 @@
           </div>
 
           ${renderMonetisationCta()}
+          ${renderExpandPanel()}
+          ${renderCtaModal()}
+        `;
+      }
 
-          <div class="start-over-row">
-            <button type="button" class="start-over-link" id="restart-final">Start over</button>
+      function renderExpandPanel() {
+        if (!state.ctaExpandPanelOpen) return "";
+        const placeholder = "e.g. Turn this into a board paper. Stress-test the biggest risk. Give me the first 30 days in more detail. What should I say to the board?";
+        const result = state.ctaExpansionResult
+          ? `<div class="expand-result">${escapeHtml(state.ctaExpansionResult)}</div>`
+          : "";
+        return `
+          <div class="expand-panel">
+            <h3 class="expand-heading">Expand this decision</h3>
+            <p class="expand-sub">Ask StrategyScale to go deeper on one part of the recommendation.</p>
+            <textarea id="expand-input" class="small" placeholder="${escapeHtml(placeholder)}">${escapeHtml(state.ctaExpansionInput || "")}</textarea>
+            <div class="actions">
+              <button type="button" id="generate-expansion">Generate expansion</button>
+            </div>
+            ${result}
+          </div>
+        `;
+      }
+
+      function renderCtaModal() {
+        if (!state.ctaModalOpen) return "";
+        return `
+          <div class="modal-backdrop" id="cta-backdrop">
+            <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="cta-modal-heading">
+              <button type="button" class="modal-close" id="cta-modal-close" aria-label="Close">×</button>
+              <h3 class="modal-heading" id="cta-modal-heading">Where do you want to go next?</h3>
+              <p class="modal-subtext">Payment is not live in this prototype. For testing, choose whether to keep working this decision or start fresh.</p>
+              <div class="modal-options">
+                <div class="modal-option">
+                  <div class="opt-title">Expand this decision</div>
+                  <p class="opt-sub">Ask a follow-up, explore a risk, or turn the recommendation into a board-ready next step.</p>
+                  <button type="button" class="secondary" id="modal-expand">Expand current decision</button>
+                </div>
+                <div class="modal-option">
+                  <div class="opt-title">Start a new decision</div>
+                  <p class="opt-sub">Pressure-test a different strategic decision from the beginning.</p>
+                  <button type="button" id="modal-new">Start new decision</button>
+                </div>
+              </div>
+            </div>
           </div>
         `;
       }
@@ -1460,14 +1628,23 @@
         const wrapUp = document.getElementById("wrap-up");
         if (wrapUp) wrapUp.addEventListener("click", wrapUpNow);
 
-        const restartF = document.getElementById("restart-final");
-        if (restartF) restartF.addEventListener("click", restart);
-
         document.querySelectorAll(".cta-button[data-cta]").forEach((el) => {
-          el.addEventListener("click", () => {
-            alert("Payment is not live in this prototype. This is testing pricing and demand.");
-          });
+          el.addEventListener("click", openCtaModal);
         });
+
+        const modalClose = document.getElementById("cta-modal-close");
+        if (modalClose) modalClose.addEventListener("click", closeCtaModal);
+        const backdrop = document.getElementById("cta-backdrop");
+        if (backdrop) backdrop.addEventListener("click", (e) => {
+          if (e.target === backdrop) closeCtaModal();
+        });
+        const modalExpand = document.getElementById("modal-expand");
+        if (modalExpand) modalExpand.addEventListener("click", chooseExpandDecision);
+        const modalNew = document.getElementById("modal-new");
+        if (modalNew) modalNew.addEventListener("click", chooseStartNew);
+
+        const genExpand = document.getElementById("generate-expansion");
+        if (genExpand) genExpand.addEventListener("click", generateExpansion);
       }
 
       // ─── Boot ───────────────────────────────────────────────────────────
