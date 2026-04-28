@@ -560,6 +560,28 @@
         border-bottom: 1px solid var(--border-soft);
       }
 
+      /* Subordinate post-CTA restart link */
+      .start-over-row {
+        margin: 18px 0 0;
+        text-align: left;
+      }
+      .start-over-link {
+        background: transparent;
+        color: var(--muted);
+        border: 0;
+        padding: 4px 0;
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 12px;
+        letter-spacing: 0.04em;
+        text-transform: none;
+        font-weight: 400;
+        cursor: pointer;
+        text-decoration: underline;
+        text-underline-offset: 4px;
+        opacity: 0.75;
+      }
+      .start-over-link:hover { color: var(--accent); opacity: 1; }
+
       /* ─── Post-final monetisation CTA ──────────────────────────────────── */
       .cta-block {
         margin: 40px 0 0;
@@ -1323,8 +1345,8 @@
 
           ${renderMonetisationCta()}
 
-          <div class="actions">
-            <button class="secondary" id="restart-final">Run another decision</button>
+          <div class="start-over-row">
+            <button type="button" class="start-over-link" id="restart-final">Start over</button>
           </div>
         `;
       }
