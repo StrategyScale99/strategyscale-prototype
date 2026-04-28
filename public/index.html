@@ -262,74 +262,215 @@
         font-size: 14px; font-style: italic; margin-top: 32px;
       }
 
-      /* Final recommendation */
-      .final-grid .field-major {
-        background: var(--panel); border: 1px solid var(--accent);
-        padding: 22px 24px; border-radius: 6px; margin-bottom: 24px;
-      }
-      .final-grid .field-major .label {
-        color: var(--accent); font-size: 12px; letter-spacing: 0.16em;
-        text-transform: uppercase; font-family: ui-sans-serif, system-ui, sans-serif;
-        margin-bottom: 10px;
-      }
-      .final-grid .field-major p { margin: 0; font-size: 18px; }
+      /* ─── Final recommendation — decision product ─────────────────────── */
 
-      .plan-grid {
-        background: var(--panel); border: 1px solid var(--border);
-        border-radius: 6px; padding: 4px 20px; margin: 0 0 24px;
+      /* THE CALL — dominant block */
+      .the-call {
+        background: linear-gradient(180deg, rgba(201,168,106,0.10), rgba(201,168,106,0.04));
+        border: 1px solid var(--accent);
+        border-radius: 8px;
+        padding: 28px 32px;
+        margin: 0 0 28px;
+      }
+      .the-call .label {
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 12px; letter-spacing: 0.20em; text-transform: uppercase;
+        color: var(--accent); margin-bottom: 14px;
+      }
+      .the-call p {
+        margin: 0;
+        font-size: 22px; line-height: 1.4; font-weight: 500;
+        color: var(--text);
+      }
+      .the-call p + p { margin-top: 10px; }
+
+      /* WHY THIS IS TRUE — bullets */
+      .why-block {
+        margin: 0 0 28px;
+      }
+      .why-block ul {
+        list-style: none; padding: 0; margin: 0;
+      }
+      .why-block li {
+        position: relative;
+        padding: 10px 0 10px 26px;
+        border-top: 1px solid var(--border-soft);
+      }
+      .why-block li:first-child { border-top: 0; }
+      .why-block li::before {
+        content: ""; position: absolute;
+        left: 0; top: 18px;
+        width: 8px; height: 8px;
+        background: var(--accent); border-radius: 50%;
       }
 
-      .criteria-grid {
-        display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
-        margin-bottom: 24px;
+      /* WHAT THIS BREAKS — three stacked rows */
+      .breaks-block {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-left: 3px solid var(--pivot);
+        border-radius: 6px;
+        padding: 4px 22px;
+        margin: 0 0 28px;
       }
-      .criteria-grid .crit {
-        background: var(--panel-2); border: 1px solid var(--border-soft);
-        padding: 16px 18px; border-radius: 4px;
+      .breaks-block .field { padding: 16px 0; border-color: var(--border-soft); }
+      .breaks-block .field .label { color: var(--pivot); }
+
+      /* THE PROOF TEST — callout */
+      .proof-test {
+        background: var(--panel);
+        border: 1px solid var(--accent);
+        border-radius: 8px;
+        padding: 22px 26px;
+        margin: 0 0 28px;
       }
-      .criteria-grid .crit.go { border-left: 3px solid var(--go); }
-      .criteria-grid .crit.stop { border-left: 3px solid var(--error); }
-      .criteria-grid .label {
+      .proof-test .proof-header {
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
+        color: var(--accent); margin: 0 0 14px;
+        display: flex; align-items: center; justify-content: space-between;
+        flex-wrap: wrap; gap: 10px;
+      }
+      .proof-test .deadline-tag {
+        background: var(--accent); color: #0e1116;
+        padding: 4px 12px; border-radius: 3px;
+        font-weight: 700; letter-spacing: 0.06em;
+      }
+      .proof-test .what-tested {
+        font-size: 17px; line-height: 1.5;
+        margin: 0 0 18px;
+      }
+      .proof-thresholds {
+        display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+      }
+      .proof-thresholds .threshold {
+        background: var(--panel-2);
+        border: 1px solid var(--border-soft);
+        border-radius: 4px;
+        padding: 14px 16px;
+      }
+      .proof-thresholds .threshold.pass { border-left: 3px solid var(--go); }
+      .proof-thresholds .threshold.fail { border-left: 3px solid var(--error); }
+      .proof-thresholds .threshold .label {
         font-family: ui-sans-serif, system-ui, sans-serif;
         font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
         margin-bottom: 8px;
       }
-      .criteria-grid .crit.go .label { color: var(--go); }
-      .criteria-grid .crit.stop .label { color: var(--error); }
-      .criteria-grid p { margin: 0; }
+      .proof-thresholds .threshold.pass .label { color: var(--go); }
+      .proof-thresholds .threshold.fail .label { color: var(--error); }
+      .proof-thresholds .threshold p { margin: 0; font-size: 15px; }
 
-      .change-trigger {
-        background: var(--panel-2); border: 1px dashed var(--accent);
-        padding: 18px 22px; border-radius: 6px; margin-bottom: 24px;
+      /* ACTION PLAN — four cards */
+      .action-plan {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin: 0 0 14px;
       }
-      .change-trigger .label {
+      .action-plan .plan-card {
+        background: var(--panel);
+        border: 1px solid var(--border-soft);
+        border-radius: 6px;
+        padding: 16px 18px;
+      }
+      .action-plan .plan-card .label {
         font-family: ui-sans-serif, system-ui, sans-serif;
-        font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+        font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
         color: var(--accent); margin-bottom: 8px;
       }
-      .change-trigger p { margin: 0; }
+      .action-plan .plan-card p { margin: 0; font-size: 15px; }
 
-      .memory-summary {
-        background: var(--panel-2); border: 1px dashed var(--border);
-        padding: 24px 28px; border-radius: 6px; margin-top: 32px;
+      .deliberate-delay {
+        background: var(--pivot-soft);
+        border: 1px solid var(--pivot);
+        border-left: 4px solid var(--pivot);
+        border-radius: 6px;
+        padding: 16px 20px;
+        margin: 0 0 28px;
       }
-      .memory-summary .memory-header {
+      .deliberate-delay .label {
         font-family: ui-sans-serif, system-ui, sans-serif;
-        font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase;
-        color: var(--muted); margin: 0 0 18px;
+        font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+        color: var(--pivot); margin-bottom: 6px;
+      }
+      .deliberate-delay p { margin: 0; }
+
+      /* WATCH SIGNALS — three columns, traffic-light */
+      .watch-signals {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin: 0 0 28px;
+      }
+      .watch-signals .signal {
+        background: var(--panel-2);
+        border: 1px solid var(--border-soft);
+        border-radius: 6px;
+        padding: 16px 18px;
+      }
+      .watch-signals .signal.continue { border-top: 3px solid var(--go); }
+      .watch-signals .signal.stop { border-top: 3px solid var(--error); }
+      .watch-signals .signal.reconsider { border-top: 3px solid var(--pivot); }
+      .watch-signals .signal .label {
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+        margin-bottom: 8px;
+      }
+      .watch-signals .signal.continue .label { color: var(--go); }
+      .watch-signals .signal.stop .label { color: var(--error); }
+      .watch-signals .signal.reconsider .label { color: var(--pivot); }
+      .watch-signals .signal p { margin: 0; font-size: 15px; }
+
+      /* MEMORY FOR NEXT TIME — compact */
+      .memory-block {
+        background: var(--panel-2);
+        border: 1px dashed var(--border);
+        border-radius: 6px;
+        padding: 18px 22px;
+        margin: 32px 0 0;
+      }
+      .memory-block .memory-header {
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+        color: var(--muted); margin: 0 0 14px;
         display: flex; align-items: center; gap: 10px;
       }
-      .memory-summary .memory-header::before {
+      .memory-block .memory-header::before {
         content: ""; display: inline-block;
         width: 6px; height: 6px; border-radius: 50%;
         background: var(--accent);
       }
-      .memory-summary .field {
-        padding: 12px 0; border-color: var(--border-soft);
+      .memory-block .memory-row {
+        display: grid;
+        grid-template-columns: 180px 1fr;
+        gap: 14px;
+        padding: 8px 0;
+        border-top: 1px solid var(--border-soft);
+        font-size: 14px;
+      }
+      .memory-block .memory-row:first-of-type { border-top: 0; }
+      .memory-block .memory-row .k {
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+        color: var(--muted);
+        padding-top: 2px;
+      }
+      .memory-block .memory-row .v p { margin: 0; }
+
+      .section-rule {
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+        color: var(--muted);
+        margin: 32px 0 14px;
+        padding-bottom: 6px;
+        border-bottom: 1px solid var(--border-soft);
       }
 
-      @media (max-width: 600px) {
-        .criteria-grid { grid-template-columns: 1fr; }
+      @media (max-width: 720px) {
+        .proof-thresholds { grid-template-columns: 1fr; }
+        .action-plan { grid-template-columns: 1fr; }
+        .watch-signals { grid-template-columns: 1fr; }
+        .memory-block .memory-row { grid-template-columns: 1fr; gap: 4px; }
         .context-bar { flex-wrap: wrap; }
       }
     </style>
@@ -342,7 +483,7 @@
       // ─── Config ─────────────────────────────────────────────────────────
       const STORAGE_KEY = "strategyscale.journey";
       const MEMORY_KEY = "strategyscale.lastMemory";
-      const STATE_VERSION = 3; // bump when state shape changes
+      const STATE_VERSION = 4; // bump when state shape changes
       const MAX_BATCHES = 3;
 
       const DECISION_MODES = [
@@ -564,8 +705,8 @@
             thinkingFrame: state.thinkingFrame,
             batches: state.batches,
           });
-          if (state.finalRec.memory_summary) {
-            persistMemory(state.finalRec.memory_summary);
+          if (state.finalRec.memory_for_next_time) {
+            persistMemory(state.finalRec.memory_for_next_time);
           }
           persist();
         } catch (e) {
@@ -798,46 +939,97 @@
           return `<div class="stage-label">Stage 4 · Final recommendation</div><div class="loading">${escapeHtml(state.loadingMsg || "Working...")}</div>${renderError()}`;
         }
         const f = state.finalRec;
-        const m = f.memory_summary || {};
+        const breaks = f.what_this_breaks || {};
+        const proof = f.proof_test || {};
+        const plan = f.action_plan || {};
+        const watch = f.watch_signals || {};
+        const memory = f.memory_for_next_time || {};
+
+        const whyBullets = (Array.isArray(f.why_this_is_true) ? f.why_this_is_true : [])
+          .map((b) => `<li>${paragraphs(b)}</li>`).join("");
+
         return `
           <div class="stage-label">Stage 4 · Final recommendation</div>
-          <h2>The call</h2>
-          <div class="final-grid">
-            <div class="field-major">
-              <div class="label">Decision</div>
-              <p>${paragraphs(f.decision)}</p>
-            </div>
-            <div class="field"><div class="label">Rationale</div><p>${paragraphs(f.rationale)}</p></div>
-            <div class="field"><div class="label">Trade-offs you accept</div><p>${paragraphs(f.tradeoffs)}</p></div>
-            <div class="field"><div class="label">Cost of inaction</div><p>${paragraphs(f.cost_of_inaction)}</p></div>
 
-            <h3>90-day plan</h3>
-            <div class="plan-grid">
-              <div class="field"><div class="label">First 30 days</div><p>${paragraphs(f.plan_30_day)}</p></div>
-              <div class="field"><div class="label">Days 30–60</div><p>${paragraphs(f.plan_60_day)}</p></div>
-              <div class="field"><div class="label">Days 60–90</div><p>${paragraphs(f.plan_90_day)}</p></div>
-            </div>
+          <div class="the-call">
+            <div class="label">The call</div>
+            <p>${paragraphs(f.the_call)}</p>
+          </div>
 
-            <h3>Decision rails</h3>
-            <div class="criteria-grid">
-              <div class="crit go"><div class="label">Go criteria</div><p>${paragraphs(f.go_criteria)}</p></div>
-              <div class="crit stop"><div class="label">Stop criteria</div><p>${paragraphs(f.stop_criteria)}</p></div>
-            </div>
+          <div class="section-rule">Why this is true</div>
+          <div class="why-block">
+            <ul>${whyBullets}</ul>
+          </div>
 
-            <div class="change-trigger">
-              <div class="label">What would change the decision</div>
-              <p>${paragraphs(f.what_would_change_the_decision)}</p>
-            </div>
+          <div class="section-rule">What this breaks</div>
+          <div class="breaks-block">
+            <div class="field"><div class="label">Deprioritised</div><p>${paragraphs(breaks.deprioritised)}</p></div>
+            <div class="field"><div class="label">Resistance</div><p>${paragraphs(breaks.resistance)}</p></div>
+            <div class="field"><div class="label">Uncomfortable trade-off</div><p>${paragraphs(breaks.uncomfortable_tradeoff)}</p></div>
+          </div>
 
-            <div class="memory-summary">
-              <div class="memory-header">What StrategyScale will remember next time</div>
-              <div class="field"><div class="label">Stated goal</div><p>${paragraphs(m.stated_goal)}</p></div>
-              <div class="field"><div class="label">Business context</div><p>${paragraphs(m.business_context)}</p></div>
-              <div class="field"><div class="label">Key constraints</div><p>${paragraphs(m.key_constraints)}</p></div>
-              <div class="field"><div class="label">Evidence gaps</div><p>${paragraphs(m.evidence_gaps)}</p></div>
-              <div class="field"><div class="label">Next decision gate</div><p>${paragraphs(m.next_decision_gate)}</p></div>
+          <div class="proof-test">
+            <div class="proof-header">
+              <span>The proof test</span>
+              <span class="deadline-tag">${escapeHtml(proof.deadline || "")}</span>
+            </div>
+            <p class="what-tested">${paragraphs(proof.what)}</p>
+            <div class="proof-thresholds">
+              <div class="threshold pass">
+                <div class="label">Pass — confirms the call</div>
+                <p>${paragraphs(proof.pass_threshold)}</p>
+              </div>
+              <div class="threshold fail">
+                <div class="label">Fail — abandon or pivot</div>
+                <p>${paragraphs(proof.fail_threshold)}</p>
+              </div>
             </div>
           </div>
+
+          <div class="section-rule">Action plan</div>
+          <div class="action-plan">
+            <div class="plan-card">
+              <div class="label">First 7 days</div>
+              <p>${paragraphs(plan.first_7_days)}</p>
+            </div>
+            <div class="plan-card">
+              <div class="label">First 30 days</div>
+              <p>${paragraphs(plan.first_30_days)}</p>
+            </div>
+            <div class="plan-card">
+              <div class="label">Days 60 – 90</div>
+              <p>${paragraphs(plan.first_60_to_90_days)}</p>
+            </div>
+          </div>
+          <div class="deliberate-delay">
+            <div class="label">Deliberate delay — do NOT do yet</div>
+            <p>${paragraphs(plan.deliberate_delay)}</p>
+          </div>
+
+          <div class="section-rule">Watch signals</div>
+          <div class="watch-signals">
+            <div class="signal continue">
+              <div class="label">Continue if</div>
+              <p>${paragraphs(watch.continue_if)}</p>
+            </div>
+            <div class="signal stop">
+              <div class="label">Stop or pivot if</div>
+              <p>${paragraphs(watch.stop_or_pivot_if)}</p>
+            </div>
+            <div class="signal reconsider">
+              <div class="label">Reconsider if</div>
+              <p>${paragraphs(watch.reconsider_if)}</p>
+            </div>
+          </div>
+
+          <div class="memory-block">
+            <div class="memory-header">Memory for next time</div>
+            <div class="memory-row"><div class="k">User goal</div><div class="v"><p>${paragraphs(memory.user_goal)}</p></div></div>
+            <div class="memory-row"><div class="k">Key constraint</div><div class="v"><p>${paragraphs(memory.key_constraint)}</p></div></div>
+            <div class="memory-row"><div class="k">Current decision gate</div><div class="v"><p>${paragraphs(memory.current_decision_gate)}</p></div></div>
+            <div class="memory-row"><div class="k">Evidence gap</div><div class="v"><p>${paragraphs(memory.evidence_gap)}</p></div></div>
+          </div>
+
           <div class="actions">
             <button class="secondary" id="restart-final">Run another decision</button>
           </div>

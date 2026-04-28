@@ -239,104 +239,159 @@ const DIAGNOSTIC_ITERATE_SCHEMA = {
 const FINAL_SCHEMA = {
   type: "object",
   properties: {
-    decision: {
+    the_call: {
       type: "string",
       description:
-        "The call, in the first 8 words. Then headline justification. Maximum 3 sentences. Open with a directive verb.",
+        "The dominant section of the response. Maximum 5 lines. Action-led. Must answer: what to do now, what NOT to do yet, the next irreversible or high-leverage move. No explanation, no hedging, no abbreviations. Use line breaks (\\n) between the three statements where it helps clarity.",
     },
-    rationale: {
-      type: "string",
+    why_this_is_true: {
+      type: "array",
       description:
-        "Why this is the right call given what was learned across the iterative diagnostic. Reference specific evidence from the answers. Maximum 3 sentences.",
+        "1-3 bullets, never more than 3. Each bullet is one sentence. Each bullet must connect directly to specific evidence from the chief executive's answers in the diagnostic — quote a number, name a stated fact, or reference a concrete answer.",
+      minItems: 1,
+      items: { type: "string" },
     },
-    tradeoffs: {
-      type: "string",
-      description:
-        "What you give up by making this call. Name them plainly. Maximum 3 sentences.",
-    },
-    cost_of_inaction: {
-      type: "string",
-      description:
-        "What waiting costs in concrete units (£, %, market share, months, customers, hires). Lead with the number. Maximum 3 sentences.",
-    },
-    plan_30_day: {
-      type: "string",
-      description:
-        "Specific moves in the first 30 days. Names, numbers, decisions, deadlines. Maximum 3 sentences.",
-    },
-    plan_60_day: {
-      type: "string",
-      description:
-        "Specific moves between days 30 and 60. Builds on the 30-day work. Maximum 3 sentences.",
-    },
-    plan_90_day: {
-      type: "string",
-      description:
-        "Specific moves between days 60 and 90. By day 90 you should know whether this is working. Maximum 3 sentences.",
-    },
-    go_criteria: {
-      type: "string",
-      description:
-        "Observable conditions that confirm the call is right and you should accelerate or commit further capital. Specific thresholds. Maximum 3 sentences.",
-    },
-    stop_criteria: {
-      type: "string",
-      description:
-        "Observable conditions that should kill this decision before 90 days are out. Specific thresholds, not vibes. Maximum 3 sentences.",
-    },
-    what_would_change_the_decision: {
-      type: "string",
-      description:
-        "The specific evidence that, if it surfaced, would force a reversal. Be concrete — name the data point, not the category. Maximum 3 sentences.",
-    },
-    memory_summary: {
+    what_this_breaks: {
       type: "object",
-      description:
-        "Lightweight retained context for the next StrategyScale session with this CEO. Useful as forward context, not a recap.",
+      description: "What the chosen call costs in organisational terms.",
       properties: {
-        stated_goal: {
+        deprioritised: {
           type: "string",
-          description: "What the CEO said they were trying to achieve, in their own framing. One sentence.",
+          description:
+            "What specific initiative, programme, hire, or product line gets deprioritised or delayed by this call. Name it specifically. Maximum 2 sentences.",
         },
-        business_context: {
+        resistance: {
           type: "string",
-          description: "The business situation — sector, scale, market position, key facts. Maximum 2 sentences.",
+          description:
+            "Who internally will resist and why. Name the role (chief financial officer, chief technology officer, head of sales, the founders, the audit committee). Maximum 2 sentences.",
         },
-        key_constraints: {
+        uncomfortable_tradeoff: {
           type: "string",
-          description: "The binding constraints (capital, time, talent, regulatory, customer concentration). Maximum 2 sentences.",
-        },
-        evidence_gaps: {
-          type: "string",
-          description: "What we still don't know that next time we'd want to start by asking. Maximum 2 sentences.",
-        },
-        next_decision_gate: {
-          type: "string",
-          description: "The next decision moment that flows from this one. When it arrives and what triggers it. Maximum 2 sentences.",
+          description:
+            "The specific uncomfortable or politically costly trade-off being accepted: firing a senior, killing a sacred-cow product, walking from a relationship, missing a quarter, eating a write-down. Vague trade-offs are forbidden. Maximum 2 sentences.",
         },
       },
-      required: [
-        "stated_goal",
-        "business_context",
-        "key_constraints",
-        "evidence_gaps",
-        "next_decision_gate",
-      ],
+      required: ["deprioritised", "resistance", "uncomfortable_tradeoff"],
+      additionalProperties: false,
+    },
+    proof_test: {
+      type: "object",
+      description:
+        "A single time-bound, falsifiable experiment that will validate or refute THE CALL. Prefer 'prove or kill' framing over premature terminal verdicts.",
+      properties: {
+        what: {
+          type: "string",
+          description: "What is being tested. One sentence.",
+        },
+        deadline: {
+          type: "string",
+          description:
+            "Time horizon: typically 7, 14, 30, 60, or 90 days. Pick the shortest that yields meaningful signal. State as 'within X days' or a calendar date.",
+        },
+        pass_threshold: {
+          type: "string",
+          description:
+            "The specific numeric or named-event threshold that confirms the call. One sentence. Must be observable.",
+        },
+        fail_threshold: {
+          type: "string",
+          description:
+            "The specific numeric or named-event threshold that signals abandon-or-pivot. One sentence. Must be observable.",
+        },
+      },
+      required: ["what", "deadline", "pass_threshold", "fail_threshold"],
+      additionalProperties: false,
+    },
+    action_plan: {
+      type: "object",
+      description: "Short and practical. Only actions that directly support THE CALL.",
+      properties: {
+        first_7_days: {
+          type: "string",
+          description:
+            "Specific moves in the first 7 days. Names, numbers, deadlines. Maximum 3 sentences.",
+        },
+        first_30_days: {
+          type: "string",
+          description:
+            "Specific moves in the first 30 days, building on week one. Maximum 3 sentences.",
+        },
+        first_60_to_90_days: {
+          type: "string",
+          description:
+            "Specific moves between days 60 and 90. By this window the chief executive should know whether this is working. Maximum 3 sentences.",
+        },
+        deliberate_delay: {
+          type: "string",
+          description:
+            "Exactly one thing the chief executive must NOT do yet, with the specific signal, threshold, or date that unlocks it. The discipline of waiting is part of the plan. Maximum 2 sentences.",
+        },
+      },
+      required: ["first_7_days", "first_30_days", "first_60_to_90_days", "deliberate_delay"],
+      additionalProperties: false,
+    },
+    watch_signals: {
+      type: "object",
+      description:
+        "Three branches the chief executive monitors. Designed to be readable as a standalone unit alongside THE CALL.",
+      properties: {
+        continue_if: {
+          type: "string",
+          description:
+            "Observable conditions that confirm staying the course. Specific numeric thresholds, dates, or named events. Maximum 3 sentences.",
+        },
+        stop_or_pivot_if: {
+          type: "string",
+          description:
+            "Observable conditions that signal abandon or redirect. Specific thresholds. Maximum 3 sentences.",
+        },
+        reconsider_if: {
+          type: "string",
+          description:
+            "Specific evidence that doesn't necessarily kill the call but should force re-examination of the framing or the proof test. Maximum 3 sentences.",
+        },
+      },
+      required: ["continue_if", "stop_or_pivot_if", "reconsider_if"],
+      additionalProperties: false,
+    },
+    memory_for_next_time: {
+      type: "object",
+      description:
+        "Compact retained context for the next StrategyScale session. Forward context, not a recap.",
+      properties: {
+        user_goal: {
+          type: "string",
+          description:
+            "What the chief executive is ultimately trying to achieve. One sentence, in their own framing.",
+        },
+        key_constraint: {
+          type: "string",
+          description:
+            "The single binding constraint that shaped this decision. One sentence.",
+        },
+        current_decision_gate: {
+          type: "string",
+          description:
+            "The next decision moment that flows from this one. When and what triggers it. One sentence.",
+        },
+        evidence_gap: {
+          type: "string",
+          description:
+            "What we still don't know that next time we'd want to start by asking. One sentence.",
+        },
+      },
+      required: ["user_goal", "key_constraint", "current_decision_gate", "evidence_gap"],
       additionalProperties: false,
     },
   },
   required: [
-    "decision",
-    "rationale",
-    "tradeoffs",
-    "cost_of_inaction",
-    "plan_30_day",
-    "plan_60_day",
-    "plan_90_day",
-    "go_criteria",
-    "stop_criteria",
-    "what_would_change_the_decision",
-    "memory_summary",
+    "the_call",
+    "why_this_is_true",
+    "what_this_breaks",
+    "proof_test",
+    "action_plan",
+    "watch_signals",
+    "memory_for_next_time",
   ],
   additionalProperties: false,
 };
