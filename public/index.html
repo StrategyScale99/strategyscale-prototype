@@ -277,12 +277,97 @@
         font-size: 12px; letter-spacing: 0.20em; text-transform: uppercase;
         color: var(--accent); margin-bottom: 14px;
       }
-      .the-call p {
-        margin: 0;
+      .the-call .lede {
+        margin: 0 0 18px;
         font-size: 22px; line-height: 1.4; font-weight: 500;
         color: var(--text);
       }
+      .the-call .call-blocks {
+        display: grid;
+        gap: 12px;
+        margin: 0;
+      }
+      .the-call .call-block {
+        background: rgba(14,17,22,0.45);
+        border: 1px solid var(--border-soft);
+        border-left: 3px solid var(--accent);
+        border-radius: 4px;
+        padding: 12px 16px;
+      }
+      .the-call .call-block .sub-label {
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+        color: var(--accent); margin-bottom: 4px;
+      }
+      .the-call .call-block p {
+        margin: 0;
+        font-size: 16px; line-height: 1.5;
+        color: var(--text);
+      }
+      .the-call p { margin: 0; }
       .the-call p + p { margin-top: 10px; }
+
+      /* Action plan numbered list */
+      .action-plan .plan-card ol {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        counter-reset: action;
+      }
+      .action-plan .plan-card ol li {
+        counter-increment: action;
+        position: relative;
+        padding: 4px 0 4px 26px;
+        font-size: 15px;
+        line-height: 1.5;
+      }
+      .action-plan .plan-card ol li::before {
+        content: counter(action);
+        position: absolute;
+        left: 0; top: 4px;
+        width: 18px; height: 18px;
+        border-radius: 50%;
+        background: var(--accent-soft);
+        color: var(--accent);
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 11px; font-weight: 700;
+        line-height: 18px; text-align: center;
+      }
+      .action-plan .plan-card ol li + li {
+        margin-top: 4px;
+        border-top: 1px solid var(--border-soft);
+        padding-top: 10px;
+      }
+      .action-plan .plan-card ol li + li::before { top: 10px; }
+
+      /* Watch-signals numbered list */
+      .watch-signals .signal ol {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        counter-reset: signal;
+      }
+      .watch-signals .signal ol li {
+        counter-increment: signal;
+        position: relative;
+        padding: 4px 0 4px 22px;
+        font-size: 15px;
+        line-height: 1.5;
+      }
+      .watch-signals .signal ol li::before {
+        content: counter(signal) ".";
+        position: absolute;
+        left: 0; top: 4px;
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 12px; font-weight: 700;
+        color: var(--muted);
+      }
+      .watch-signals .signal ol li + li {
+        margin-top: 4px;
+        border-top: 1px solid var(--border-soft);
+        padding-top: 10px;
+      }
+      .watch-signals .signal ol li + li::before { top: 10px; }
 
       /* WHY THIS IS TRUE — bullets */
       .why-block {
@@ -440,6 +525,15 @@
         width: 6px; height: 6px; border-radius: 50%;
         background: var(--accent);
       }
+      .memory-block .memory-summary-line {
+        font-size: 16px;
+        line-height: 1.55;
+        color: var(--text);
+        padding: 4px 0 14px;
+        margin: 0 0 10px;
+        border-bottom: 1px solid var(--border-soft);
+      }
+      .memory-block .memory-summary-line p { margin: 0; }
       .memory-block .memory-row {
         display: grid;
         grid-template-columns: 180px 1fr;
@@ -466,12 +560,133 @@
         border-bottom: 1px solid var(--border-soft);
       }
 
+      /* ─── Post-final monetisation CTA ──────────────────────────────────── */
+      .cta-block {
+        margin: 40px 0 0;
+        padding: 28px 0 0;
+        border-top: 1px solid var(--border-soft);
+      }
+      .cta-block .cta-heading {
+        font-family: ui-serif, Georgia, "Times New Roman", serif;
+        font-size: 22px; line-height: 1.3; font-weight: 500;
+        color: var(--text);
+        margin: 0 0 10px;
+      }
+      .cta-block .cta-body {
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 14px; line-height: 1.55;
+        color: var(--muted);
+        margin: 0 0 22px;
+        max-width: 640px;
+      }
+      .cta-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin: 0 0 18px;
+      }
+      .cta-card {
+        position: relative;
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 22px 22px 24px;
+        display: flex; flex-direction: column;
+      }
+      .cta-card.featured {
+        border-color: var(--accent);
+        background: linear-gradient(180deg, rgba(201,168,106,0.08), rgba(201,168,106,0.02));
+        box-shadow: 0 0 0 1px var(--accent) inset;
+      }
+      .cta-card .cta-badge {
+        position: absolute;
+        top: -10px; left: 18px;
+        background: var(--panel-2);
+        border: 1px solid var(--border);
+        color: var(--muted);
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+        padding: 3px 10px; border-radius: 3px;
+      }
+      .cta-card.featured .cta-badge {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #0e1116;
+        font-weight: 700;
+      }
+      .cta-card .cta-title {
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase;
+        color: var(--accent);
+        margin: 0 0 8px;
+      }
+      .cta-card .cta-price {
+        font-family: ui-serif, Georgia, "Times New Roman", serif;
+        font-size: 28px; line-height: 1.1; font-weight: 500;
+        color: var(--text);
+        margin: 0 0 6px;
+      }
+      .cta-card .cta-price .per {
+        font-size: 14px; color: var(--muted);
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-weight: 400;
+      }
+      .cta-card .cta-subtext {
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 13px; color: var(--muted);
+        margin: 0 0 14px;
+      }
+      .cta-card ul.cta-bullets {
+        list-style: none; margin: 0 0 18px; padding: 0;
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 14px;
+      }
+      .cta-card ul.cta-bullets li {
+        position: relative;
+        padding: 4px 0 4px 18px;
+        line-height: 1.5;
+      }
+      .cta-card ul.cta-bullets li::before {
+        content: "";
+        position: absolute;
+        left: 0; top: 12px;
+        width: 6px; height: 6px;
+        border-radius: 50%;
+        background: var(--accent-soft);
+        border: 1px solid var(--accent);
+      }
+      .cta-card .cta-button {
+        margin-top: auto;
+        width: 100%;
+      }
+      .cta-card.featured .cta-button {
+        background: var(--accent);
+        color: #0e1116;
+      }
+      .cta-card:not(.featured) .cta-button {
+        background: transparent;
+        color: var(--text);
+        border: 1px solid var(--border);
+      }
+      .cta-card:not(.featured) .cta-button:hover:not(:disabled) {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      .cta-trust {
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 13px; line-height: 1.55;
+        color: var(--muted);
+        font-style: italic;
+        margin: 4px 0 18px;
+        max-width: 640px;
+      }
       @media (max-width: 720px) {
         .proof-thresholds { grid-template-columns: 1fr; }
         .action-plan { grid-template-columns: 1fr; }
         .watch-signals { grid-template-columns: 1fr; }
         .memory-block .memory-row { grid-template-columns: 1fr; gap: 4px; }
         .context-bar { flex-wrap: wrap; }
+        .cta-grid { grid-template-columns: 1fr; }
       }
     </style>
   </head>
@@ -483,7 +698,7 @@
       // ─── Config ─────────────────────────────────────────────────────────
       const STORAGE_KEY = "strategyscale.journey";
       const MEMORY_KEY = "strategyscale.lastMemory";
-      const STATE_VERSION = 4; // bump when state shape changes
+      const STATE_VERSION = 5; // bump when state shape changes
       const MAX_BATCHES = 3;
 
       const DECISION_MODES = [
@@ -568,6 +783,64 @@
       }
       function paragraphs(s) {
         return escapeHtml(s).replace(/\n+/g, "</p><p>");
+      }
+
+      // THE CALL parser. Splits on the three labels (CORE CALL:, ONLY PROCEED IF:,
+      // COUNTER WITH:) — anything before the first label is the lede. Returns
+      // { lede, blocks } where blocks is [] when the model returned a single
+      // unstructured call. Labels are matched on their own line, case-insensitive.
+      const CALL_LABEL_RE = /^\s*(CORE CALL|ONLY PROCEED IF|COUNTER WITH)\s*:\s*$/i;
+      function parseCallBlocks(call) {
+        if (!call) return { lede: "", blocks: [] };
+        const lines = String(call).split(/\r?\n/);
+        const blocks = [];
+        const ledeLines = [];
+        let current = null;
+        for (const line of lines) {
+          const m = line.match(CALL_LABEL_RE);
+          if (m) {
+            if (current) blocks.push(current);
+            current = { label: m[1].toUpperCase(), lines: [] };
+          } else if (current) {
+            current.lines.push(line);
+          } else {
+            ledeLines.push(line);
+          }
+        }
+        if (current) blocks.push(current);
+        return {
+          lede: ledeLines.join("\n").trim(),
+          blocks: blocks.map((b) => ({ label: b.label, text: b.lines.join("\n").trim() })),
+        };
+      }
+
+      // Numbered-list parser for ACTION PLAN cards and WATCH SIGNALS columns.
+      // Returns array of strings if the input parses as "1. ... 2. ... 3. ...",
+      // otherwise null (caller falls back to paragraphs()).
+      function parseNumberedList(s) {
+        if (!s) return null;
+        const text = String(s).trim();
+        if (!/^\s*\d+\.\s+/.test(text)) return null;
+        const parts = text.split(/\n+/).map((l) => l.trim()).filter(Boolean);
+        const items = [];
+        let buf = null;
+        for (const p of parts) {
+          const m = p.match(/^\s*\d+\.\s+(.*)$/);
+          if (m) {
+            if (buf) items.push(buf);
+            buf = m[1];
+          } else if (buf) {
+            buf += " " + p;
+          }
+        }
+        if (buf) items.push(buf);
+        return items.length > 0 ? items : null;
+      }
+
+      function renderNumberedList(s) {
+        const items = parseNumberedList(s);
+        if (!items) return `<p>${paragraphs(s)}</p>`;
+        return `<ol>${items.map((i) => `<li>${escapeHtml(i)}</li>`).join("")}</ol>`;
       }
       async function postJSON(url, body) {
         const res = await fetch(url, {
@@ -935,6 +1208,7 @@
       }
 
       function renderFinal() {
+        console.log("[StrategyScale] renderFinal()", { hasFinalRec: !!state.finalRec, loading: state.loading });
         if (state.loading || !state.finalRec) {
           return `<div class="stage-label">Stage 4 · Final recommendation</div><div class="loading">${escapeHtml(state.loadingMsg || "Working...")}</div>${renderError()}`;
         }
@@ -948,12 +1222,28 @@
         const whyBullets = (Array.isArray(f.why_this_is_true) ? f.why_this_is_true : [])
           .map((b) => `<li>${paragraphs(b)}</li>`).join("");
 
+        const callParsed = parseCallBlocks(f.the_call);
+        const callBlocksHtml = callParsed.blocks.length
+          ? `<div class="call-blocks">
+              ${callParsed.blocks.map((b) => `
+                <div class="call-block">
+                  <div class="sub-label">${escapeHtml(b.label)}</div>
+                  <p>${paragraphs(b.text)}</p>
+                </div>
+              `).join("")}
+            </div>`
+          : "";
+        const callLedeHtml = callParsed.lede
+          ? `<p class="lede">${paragraphs(callParsed.lede)}</p>`
+          : (!callBlocksHtml ? `<p class="lede">${paragraphs(f.the_call)}</p>` : "");
+
         return `
           <div class="stage-label">Stage 4 · Final recommendation</div>
 
           <div class="the-call">
             <div class="label">The call</div>
-            <p>${paragraphs(f.the_call)}</p>
+            ${callLedeHtml}
+            ${callBlocksHtml}
           </div>
 
           <div class="section-rule">Why this is true</div>
@@ -990,15 +1280,15 @@
           <div class="action-plan">
             <div class="plan-card">
               <div class="label">First 7 days</div>
-              <p>${paragraphs(plan.first_7_days)}</p>
+              ${renderNumberedList(plan.first_7_days)}
             </div>
             <div class="plan-card">
               <div class="label">First 30 days</div>
-              <p>${paragraphs(plan.first_30_days)}</p>
+              ${renderNumberedList(plan.first_30_days)}
             </div>
             <div class="plan-card">
               <div class="label">Days 60 – 90</div>
-              <p>${paragraphs(plan.first_60_to_90_days)}</p>
+              ${renderNumberedList(plan.first_60_to_90_days)}
             </div>
           </div>
           <div class="deliberate-delay">
@@ -1010,28 +1300,74 @@
           <div class="watch-signals">
             <div class="signal continue">
               <div class="label">Continue if</div>
-              <p>${paragraphs(watch.continue_if)}</p>
+              ${renderNumberedList(watch.continue_if)}
             </div>
             <div class="signal stop">
               <div class="label">Stop or pivot if</div>
-              <p>${paragraphs(watch.stop_or_pivot_if)}</p>
+              ${renderNumberedList(watch.stop_or_pivot_if)}
             </div>
             <div class="signal reconsider">
               <div class="label">Reconsider if</div>
-              <p>${paragraphs(watch.reconsider_if)}</p>
+              ${renderNumberedList(watch.reconsider_if)}
             </div>
           </div>
 
           <div class="memory-block">
             <div class="memory-header">Memory for next time</div>
+            ${memory.memory_summary ? `<div class="memory-summary-line"><p>${paragraphs(memory.memory_summary)}</p></div>` : ""}
             <div class="memory-row"><div class="k">User goal</div><div class="v"><p>${paragraphs(memory.user_goal)}</p></div></div>
             <div class="memory-row"><div class="k">Key constraint</div><div class="v"><p>${paragraphs(memory.key_constraint)}</p></div></div>
             <div class="memory-row"><div class="k">Current decision gate</div><div class="v"><p>${paragraphs(memory.current_decision_gate)}</p></div></div>
             <div class="memory-row"><div class="k">Evidence gap</div><div class="v"><p>${paragraphs(memory.evidence_gap)}</p></div></div>
           </div>
 
+          ${renderMonetisationCta()}
+
           <div class="actions">
             <button class="secondary" id="restart-final">Run another decision</button>
+          </div>
+        `;
+      }
+
+      function renderMonetisationCta() {
+        console.log("[StrategyScale] renderMonetisationCta() called");
+        return `
+          <div class="cta-block">
+            <h3 class="cta-heading">Keep working the decision</h3>
+            <p class="cta-body">You've completed your free StrategyScale decision brief. The recommendation is useful now — but the value compounds when you save the decision, track the proof test, and come back with new evidence.</p>
+
+            <div class="cta-grid">
+              <div class="cta-card">
+                <span class="cta-badge">Best for one-off pressure-test</span>
+                <div class="cta-title">Decision Pass</div>
+                <div class="cta-price">£49</div>
+                <div class="cta-subtext">Run another saved decision brief</div>
+                <ul class="cta-bullets">
+                  <li>One additional full decision</li>
+                  <li>Save the recommendation and decision memory</li>
+                  <li>Export a board-ready brief</li>
+                  <li>Revisit the proof test when new evidence arrives</li>
+                </ul>
+                <button type="button" class="cta-button" data-cta="pass">Buy another decision</button>
+              </div>
+
+              <div class="cta-card featured">
+                <span class="cta-badge">Best for repeated decisions</span>
+                <div class="cta-title">Founder Plan</div>
+                <div class="cta-price">£49<span class="per"> /month</span></div>
+                <div class="cta-subtext">For CEOs making repeated strategic calls</div>
+                <ul class="cta-bullets">
+                  <li>5 decision briefs per month</li>
+                  <li>Saved decision memory</li>
+                  <li>Exportable board-ready summaries</li>
+                  <li>30/60/90-day proof-test tracking</li>
+                  <li>Early founder pricing</li>
+                </ul>
+                <button type="button" class="cta-button" data-cta="founder">Start Founder Plan</button>
+              </div>
+            </div>
+
+            <p class="cta-trust">StrategyScale is not selling more dashboards. It helps you pressure-test decisions before you commit money, people or reputation.</p>
           </div>
         `;
       }
@@ -1104,6 +1440,12 @@
 
         const restartF = document.getElementById("restart-final");
         if (restartF) restartF.addEventListener("click", restart);
+
+        document.querySelectorAll(".cta-button[data-cta]").forEach((el) => {
+          el.addEventListener("click", () => {
+            alert("Payment is not live in this prototype. This is testing pricing and demand.");
+          });
+        });
       }
 
       // ─── Boot ───────────────────────────────────────────────────────────

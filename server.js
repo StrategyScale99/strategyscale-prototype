@@ -242,7 +242,7 @@ const FINAL_SCHEMA = {
     the_call: {
       type: "string",
       description:
-        "The dominant section of the response. Maximum 5 lines. Action-led. Must answer: what to do now, what NOT to do yet, the next irreversible or high-leverage move. No explanation, no hedging, no abbreviations. Use line breaks (\\n) between the three statements where it helps clarity.",
+        "The dominant section of the response. The FIRST SENTENCE is no more than 25 words and stands on its own as a boardroom recommendation. It must open with a directive form: Proceed, Do not proceed, Proceed only if, Pause and test, Counter with, Reframe the decision, Sign, Do not sign, Walk, Hold, Kill. It must NOT open with 'Consider', 'It depends', 'You may want to', 'We recommend', 'Explore'. Where the call has linked parts, follow the first sentence with three labelled blocks separated by blank lines, using these EXACT labels in upper case on their own line: 'CORE CALL:' then the core decision; 'ONLY PROCEED IF:' then the conditions; 'COUNTER WITH:' then the immediate counter-move. The renderer keys on these exact strings — no variants. Use the labelled structure only when there are genuinely linked decisions. Maximum 5 lines total. No long paragraphs.",
     },
     why_this_is_true: {
       type: "array",
@@ -253,7 +253,8 @@ const FINAL_SCHEMA = {
     },
     what_this_breaks: {
       type: "object",
-      description: "What the chosen call costs in organisational terms.",
+      description:
+        "Memorable, uncomfortable trade-off — not administrative consequences. The uncomfortable_tradeoff field MUST OPEN with the exact phrase 'This breaks the idea that…' as its very first sentence (not buried inside).",
       properties: {
         deprioritised: {
           type: "string",
@@ -268,7 +269,7 @@ const FINAL_SCHEMA = {
         uncomfortable_tradeoff: {
           type: "string",
           description:
-            "The specific uncomfortable or politically costly trade-off being accepted: firing a senior, killing a sacred-cow product, walking from a relationship, missing a quarter, eating a write-down. Vague trade-offs are forbidden. Maximum 2 sentences.",
+            "The specific uncomfortable or politically costly trade-off being accepted: firing a senior, killing a sacred-cow product, walking from a relationship, missing a quarter, eating a write-down. MUST OPEN with the exact phrase 'This breaks the idea that…' as the very first sentence of this field. After that opening sentence, name the specific painful trade-off concretely. Vague trade-offs are forbidden. Maximum 2 sentences total.",
         },
       },
       required: ["deprioritised", "resistance", "uncomfortable_tradeoff"],
@@ -277,7 +278,7 @@ const FINAL_SCHEMA = {
     proof_test: {
       type: "object",
       description:
-        "A single time-bound, falsifiable experiment that will validate or refute THE CALL. Prefer 'prove or kill' framing over premature terminal verdicts.",
+        "A single time-bound, falsifiable experiment that will validate or refute THE CALL. Prefer 'prove or kill' framing over premature terminal verdicts. Where the test depends on a counterparty accepting protection, use the broader vocabulary of hard economic protection (financial penalties, take-or-pay minimums, margin floor, tooling contribution, escrow, automatic loss of exclusivity, shorter exclusivity window, distributor-funded launch cost, payment discipline triggers); do not make one mechanism the only acceptable route if equivalent economic protections could achieve the same purpose.",
       properties: {
         what: {
           type: "string",
@@ -291,7 +292,7 @@ const FINAL_SCHEMA = {
         pass_threshold: {
           type: "string",
           description:
-            "The specific numeric or named-event threshold that confirms the call. One sentence. Must be observable.",
+            "The specific numeric or named-event threshold that confirms the call. One sentence. Must be observable. Where economic protection is the test, name two or three equivalent acceptable mechanisms rather than only one.",
         },
         fail_threshold: {
           type: "string",
@@ -304,22 +305,23 @@ const FINAL_SCHEMA = {
     },
     action_plan: {
       type: "object",
-      description: "Short and practical. Only actions that directly support THE CALL.",
+      description:
+        "Short, owner-led, executable. Only actions that directly support THE CALL. Where actions must be cut, prioritise actions that change the decision over actions that merely support implementation.",
       properties: {
         first_7_days: {
           type: "string",
           description:
-            "Specific moves in the first 7 days. Names, numbers, deadlines. Maximum 3 sentences.",
+            "MAXIMUM 3 actions, written as a numbered list with a newline (\\n) between items in the format '1. [Owner] [verb] [object].'. Each action is one sentence. Each action starts with an accountable owner where possible (chief executive, chief financial officer, chief operating officer, commercial director, chief technology officer, head of sales, legal, the board). Do not combine multiple actions with 'and'.",
         },
         first_30_days: {
           type: "string",
           description:
-            "Specific moves in the first 30 days, building on week one. Maximum 3 sentences.",
+            "MAXIMUM 3 actions, same numbered-list format and owner-led discipline as first_7_days. Builds on week one.",
         },
         first_60_to_90_days: {
           type: "string",
           description:
-            "Specific moves between days 60 and 90. By this window the chief executive should know whether this is working. Maximum 3 sentences.",
+            "MAXIMUM 3 actions, same numbered-list format and owner-led discipline. By this window the chief executive should know whether this is working.",
         },
         deliberate_delay: {
           type: "string",
@@ -333,22 +335,22 @@ const FINAL_SCHEMA = {
     watch_signals: {
       type: "object",
       description:
-        "Three branches the chief executive monitors. Designed to be readable as a standalone unit alongside THE CALL.",
+        "Three branches the chief executive monitors. Designed to be readable alongside THE CALL. Each column MAXIMUM 4 signals, written as a numbered list with newline (\\n) between items: '1. [signal].'. Every signal must be specific to this decision — name the metric, counterparty, threshold, deadline, or named event. Banned generic phrases: 'monitor performance', 'track key performance indicators', 'review progress', 'watch the market', 'keep an eye on', 'regular check-ins'.",
       properties: {
         continue_if: {
           type: "string",
           description:
-            "Observable conditions that confirm staying the course. Specific numeric thresholds, dates, or named events. Maximum 3 sentences.",
+            "Maximum 4 numbered, decision-specific signals confirming staying the course. Numeric thresholds, dates, named events.",
         },
         stop_or_pivot_if: {
           type: "string",
           description:
-            "Observable conditions that signal abandon or redirect. Specific thresholds. Maximum 3 sentences.",
+            "Maximum 4 numbered, decision-specific signals that abandon or redirect the call. Specific thresholds.",
         },
         reconsider_if: {
           type: "string",
           description:
-            "Specific evidence that doesn't necessarily kill the call but should force re-examination of the framing or the proof test. Maximum 3 sentences.",
+            "Maximum 4 numbered, decision-specific signals that don't kill the call but should force re-examination of framing or proof test.",
         },
       },
       required: ["continue_if", "stop_or_pivot_if", "reconsider_if"],
@@ -359,6 +361,11 @@ const FINAL_SCHEMA = {
       description:
         "Compact retained context for the next StrategyScale session. Forward context, not a recap.",
       properties: {
+        memory_summary: {
+          type: "string",
+          description:
+            "The top-line synthesis a future StrategyScale session would actually want surfaced. MUST begin with the exact phrase 'Saved for next decision: '. Two to three sentences. State the underlying lesson plus the lens future expansion or capital decisions should be tested against. Worked example: 'Saved for next decision: Growth is attractive, but capacity and margin protection are the governing constraints. Future expansion decisions should be tested against customer exposure, effective capacity, and channel-control risk.'",
+        },
         user_goal: {
           type: "string",
           description:
@@ -380,7 +387,7 @@ const FINAL_SCHEMA = {
             "What we still don't know that next time we'd want to start by asking. One sentence.",
         },
       },
-      required: ["user_goal", "key_constraint", "current_decision_gate", "evidence_gap"],
+      required: ["memory_summary", "user_goal", "key_constraint", "current_decision_gate", "evidence_gap"],
       additionalProperties: false,
     },
   },
