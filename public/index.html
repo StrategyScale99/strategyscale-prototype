@@ -1683,14 +1683,11 @@ window.submitSSFeedback = submitSSFeedback;
   }
   render();
 
-  // TEMP: show feedback for testing
-  const el = document.getElementById("ss-feedback");
-  if (el) el.style.display = "block";
-}
+  }
       boot();
     </script>
     <!-- StrategyScale Feedback Block -->
-<<div id="ss-feedback" style="display:block; margin-top:40px; padding:20px; border:1px solid #333; border-radius:8px;">
+<div id="ss-feedback" style="display:none; margin-top:40px; padding:20px; border:1px solid #333; border-radius:8px;">
   <h3>Help shape StrategyScale</h3>
   <p>You’ve just used StrategyScale to pressure-test a real strategic decision.</p>
 
