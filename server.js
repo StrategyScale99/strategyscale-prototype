@@ -656,7 +656,10 @@ app.post("/api/final", async (req, res) => {
     sendApiError(res, err);
   }
 });
-
+app.post("/api/feedback", (req, res) => {
+  console.log("FEEDBACK RECEIVED:", req.body);
+  res.json({ success: true });
+});
 // Serverless platforms (Vercel) import `app` and manage the listener themselves.
 // Only bind a port for local dev.
 export default app;
@@ -667,3 +670,4 @@ if (!process.env.VERCEL) {
     console.log(`StrategyScale prototype running on http://localhost:${PORT}`);
   });
 }
+

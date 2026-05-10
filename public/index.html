@@ -1646,16 +1646,76 @@
         const genExpand = document.getElementById("generate-expansion");
         if (genExpand) genExpand.addEventListener("click", generateExpansion);
       }
+function submitSSFeedback() {
 
+  const price = document.getElementById("ss-price").value;
+  const value = document.getElementById("ss-value").value;
+  const blocker = document.getElementById("ss-blocker").value;
+
+  const payload = {
+    price: price,
+    value: value,
+    blocker: blocker,
+    timestamp: new Date().toISOString()
+  };
+
+  fetch("/api/feedback", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(payload)
+  })
+    .then(function () {
+      alert("Thanks — this helps shape StrategyScale.");
+    })
+    .catch(function () {
+      alert("Feedback failed to send");
+    });
+}
+
+window.submitSSFeedback = submitSSFeedback;
       // ─── Boot ───────────────────────────────────────────────────────────
-      function boot() {
-        const saved = loadSaved();
-        if (saved && saved.view !== "INPUT") {
-          state.savedJourney = saved;
-        }
-        render();
-      }
+     function boot() {
+  const saved = loadSaved();
+  if (saved && saved.view !== "INPUT") {
+    state.savedJourney = saved;
+  }
+  render();
+
+  // TEMP: show feedback for testing
+  const el = document.getElementById("ss-feedback");
+  if (el) el.style.display = "block";
+}
       boot();
     </script>
+    <!-- StrategyScale Feedback Block -->
+<<div id="ss-feedback" style="display:block; margin-top:40px; padding:20px; border:1px solid #333; border-radius:8px;">
+  <h3>Help shape StrategyScale</h3>
+  <p>You’ve just used StrategyScale to pressure-test a real strategic decision.</p>
+
+  <label>Would you pay to use this monthly?</label><br>
+  <select id="ss-price">
+    <option>No</option>
+    <option>£49/month</option>
+    <option>£99/month</option>
+    <option>£249/month</option>
+    <option>£500+/month</option>
+  </select>
+
+  <br><br>
+
+  <label>What would make this worth paying for?</label><br>
+  <textarea id="ss-value" rows="3" style="width:100%;"></textarea>
+
+  <br><br>
+
+  <label>What would stop you paying?</label><br>
+  <textarea id="ss-blocker" rows="3" style="width:100%;"></textarea>
+
+  <br><br>
+
+  <button onclick="submitSSFeedback()">Submit feedback</button>
+</div>
   </body>
 </html>
