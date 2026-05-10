@@ -1520,9 +1520,13 @@
       }
 
       function renderMonetisationCta() {
-        console.log("[StrategyScale] renderMonetisationCta() called");
-        return `
-          <div class="cta-block">
+  const feedback = document.getElementById("ss-feedback");
+  if (feedback) feedback.style.display = "block";
+
+  console.log("[StrategyScale] renderMonetisationCta() called");
+
+  return `
+    <div class="cta-block">
             <h3 class="cta-heading">Keep working the decision</h3>
             <p class="cta-body">You've completed your free StrategyScale decision brief. The recommendation is useful now — but the value compounds when you save the decision, track the proof test, and come back with new evidence.</p>
 
